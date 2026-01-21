@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Raksha-Setu | Identity Verified</title>
+    
+    <link rel="stylesheet" href="style.css">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div id="loader">
+        <div class="scanner"></div>
+        <p>VERIFYING BIOMETRICS...</p>
+    </div>
+
+    <div class="app-container">
+        
+        <header>
+            <div class="status-bar">
+                <span><i class="fas fa-satellite-dish"></i> GPS: LOCKED</span>
+                <span id="batteryLevel"><i class="fas fa-battery-full"></i> 100%</span>
+            </div>
+            <div class="logo-section">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" alt="Emblem">
+                <div>
+                    <h1>RAKSHA-SETU</h1>
+                    <small>GOVT. VERIFIED TAG</small>
+                </div>
+            </div>
+        </header>
+
+        <main id="publicInterface">
+            
+            <div class="glass-panel profile-card">
+                <div class="profile-photo-big">
+                    <img src="image_0.png" alt="User Photo" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png'">
+                </div>
+                <div class="profile-details">
+                    <h2>ALTAMAS ANSARI</h2>
+                    <p class="verified-text"><i class="fas fa-check-circle"></i> IDENTITY VERIFIED</p>
+                    <small>DOB: 2008 | Gender: Male</small>
+                </div>
+            </div>
+
+            <div id="mapContainer" class="glass-panel hidden">
+                <div id="map"></div>
+                <p class="loc-text">Location Trace: Active</p>
+            </div>
+
+            <div class="glass-panel alert-panel">
+                <div class="pulse-ring"></div>
+                <button class="sos-btn" onclick="activateEmergency()">
+                    <i class="fas fa-fingerprint"></i>
+                    <span>TAP FOR SOS</span>
+                </button>
+            </div>
+
+            <p class="instruction">Tap above to broadcast GPS coordinates to Emergency Response Support System (ERSS-112).</p>
+
+            <button class="secondary-btn" onclick="offlineMode()">
+                <i class="fas fa-wifi"></i> NO INTERNET? SEND SMS
+            </button>
+
+            <div class="doctor-trigger" onclick="showLogin()">
+                <i class="fas fa-user-md"></i> MEDICAL PERSONNEL LOGIN
+            </div>
+        </main>
+
+        <section id="medicalData" class="hidden">
+            <div class="glass-panel id-card">
+                <div class="id-header">
+                    <div class="id-info">
+                        <h2>MEDICAL REPORT</h2>
+                        <span class="tag">ABHA: 91-8822-1100</span>
+                    </div>
+                </div>
+                
+                <div class="vital-grid">
+                    <div class="vital-box danger">
+                        <small>BLOOD GRP</small>
+                        <h3>O+</h3>
+                    </div>
+                    <div class="vital-box warning">
+                        <small>ALLERGY</small>
+                        <h3>PENICILLIN</h3>
+                    </div>
+                    <div class="vital-box info">
+                        <small>CONDITION</small>
+                        <h3>DIABETIC</h3>
+                    </div>
+                </div>
+
+                <div class="contact-actions">
+                    <a href="tel:112" class="action-btn police">
+                        <i class="fas fa-shield-alt"></i> POLICE (112)
+                    </a>
+                    
+                    <a href="tel:9106271850" class="action-btn family">
+                        <i class="fas fa-user-shield"></i> PERSONAL GUARDIAN
+                    </a>
+                </div>
+            </div>
+            
+            <button class="secondary-btn logout" onclick="location.reload()">LOCK SYSTEM</button>
+        </section>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="script.js"></script>
+</body>
+                          </html>
+  
