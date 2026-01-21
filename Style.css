@@ -1,0 +1,111 @@
+:root {
+    --neon-blue: #00f3ff;
+    --neon-red: #ff0055;
+    --glass: rgba(255, 255, 255, 0.05);
+    --dark-bg: #050505;
+    --text-main: #ffffff;
+}
+
+body {
+    margin: 0; padding: 0;
+    background: radial-gradient(circle at top, #1a2a3a, #000000);
+    color: var(--text-main);
+    font-family: 'Rajdhani', sans-serif;
+    min-height: 100vh;
+}
+
+/* LOADER */
+#loader {
+    position: fixed; inset: 0; background: #000; z-index: 1000;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+.scanner {
+    width: 100%; height: 2px; background: var(--neon-blue);
+    box-shadow: 0 0 15px var(--neon-blue);
+    animation: scan 2s infinite;
+}
+@keyframes scan { 0% {translate: 0 -50px; opacity: 0;} 50% {opacity: 1;} 100% {translate: 0 50px; opacity: 0;} }
+
+/* CONTAINER */
+.app-container {
+    max-width: 450px; margin: 0 auto; padding: 20px;
+    display: flex; flex-direction: column;
+}
+
+/* HEADER */
+header {
+    display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px; margin-bottom: 10px;
+}
+.status-bar { font-size: 12px; color: var(--neon-blue); display: flex; gap: 10px; }
+.logo-section { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
+.logo-section img { width: 45px; filter: invert(1); }
+h1 { margin: 0; font-family: 'Orbitron', sans-serif; letter-spacing: 1px; font-size: 24px; text-shadow: 0 0 10px rgba(0, 243, 255, 0.5); }
+small { font-size: 10px; letter-spacing: 2px; opacity: 0.8; }
+
+/* GLASS PANELS */
+.glass-panel {
+    background: var(--glass); backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 15px; padding: 20px; margin: 15px 0;
+    box-shadow: 0 4px 30px rgba(0,0,0,0.5);
+}
+
+/* PROFILE CARD (PUBLIC) */
+.profile-card { text-align: center; border-top: 2px solid var(--neon-blue); }
+.profile-photo-big {
+    width: 130px; height: 130px; margin: 0 auto 10px auto;
+    border-radius: 50%; border: 3px solid var(--neon-blue);
+    padding: 3px; background: rgba(0,0,0,0.5); overflow: hidden;
+}
+.profile-photo-big img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+.profile-details h2 { margin: 5px 0; font-family: 'Orbitron'; font-size: 22px; }
+.verified-text { color: var(--neon-blue); font-size: 14px; margin: 0; font-weight: bold; }
+
+/* SOS BUTTON */
+.alert-panel { display: flex; justify-content: center; align-items: center; position: relative; height: 160px; }
+.sos-btn {
+    width: 110px; height: 110px; border-radius: 50%;
+    border: 2px solid var(--neon-red); background: rgba(255, 0, 85, 0.15);
+    color: var(--neon-red); font-size: 14px; font-weight: bold; cursor: pointer;
+    box-shadow: 0 0 25px var(--neon-red); z-index: 2;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+.sos-btn i { font-size: 35px; margin-bottom: 5px; }
+.pulse-ring {
+    position: absolute; width: 90px; height: 90px; border-radius: 50%;
+    border: 2px solid var(--neon-red); animation: pulse 2s infinite;
+}
+@keyframes pulse { 0% {scale: 1; opacity: 1;} 100% {scale: 2.2; opacity: 0;} }
+
+/* BUTTONS */
+.secondary-btn {
+    width: 100%; padding: 15px; background: transparent;
+    border: 1px solid var(--neon-blue); color: var(--neon-blue);
+    font-family: 'Orbitron'; cursor: pointer; border-radius: 5px;
+    margin-top: 10px; transition: 0.3s; font-size: 14px;
+}
+.secondary-btn:hover { background: var(--neon-blue); color: #000; }
+
+.doctor-trigger {
+    text-align: center; margin-top: 25px; opacity: 0.6; font-size: 12px; cursor: pointer; letter-spacing: 1px; padding-bottom: 20px;
+}
+
+/* MEDICAL DATA */
+.hidden { display: none !important; }
+.id-header { border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 15px; padding-bottom: 10px; }
+.vital-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; text-align: center; }
+.vital-box { background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px; }
+.danger h3 { color: var(--neon-red); margin: 5px 0 0 0; font-size: 24px; }
+.warning h3 { color: orange; margin: 5px 0 0 0; font-size: 18px; }
+.info h3 { color: var(--neon-blue); margin: 5px 0 0 0; font-size: 18px; }
+
+.contact-actions { display: flex; gap: 10px; margin-top: 20px; }
+.action-btn { flex: 1; padding: 15px 10px; text-align: center; text-decoration: none; color: white; border-radius: 5px; font-weight: bold; font-family: 'Orbitron'; font-size: 12px; }
+.police { background: #d32f2f; }
+.family { background: #00897b; }
+
+/* MAP */
+#map { height: 180px; width: 100%; border-radius: 10px; margin-bottom: 10px; border: 1px solid var(--neon-blue); }
+.loc-text { font-size: 10px; color: var(--neon-blue); text-align: center; margin: 0; }
+  
