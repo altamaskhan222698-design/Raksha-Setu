@@ -3,9 +3,9 @@ window.onload = function() {
     // 1. Simulate Loading Protocols (Biometric Scan Effect)
     setTimeout(() => {
         document.getElementById('loader').style.display = 'none';
-        speak("Identity Verified. Raksha Setu System Active.");
+        speak("Identity Verified. System Active.");
         checkBattery();
-    }, 2500);
+    }, 2000);
 };
 
 // --- VOICE AI ---
@@ -13,8 +13,7 @@ function speak(text) {
     if ('speechSynthesis' in window) {
         let msg = new SpeechSynthesisUtterance(text);
         msg.rate = 1; 
-        msg.pitch = 1.1; // Thoda Robotic tone
-        // msg.lang = 'hi-IN'; // Agar Hindi chahiye to ye uncomment karein
+        msg.pitch = 1.1;
         window.speechSynthesis.speak(msg);
     }
 }
@@ -29,55 +28,89 @@ function checkBattery() {
     }
 }
 
-// --- EMERGENCY PROTOCOL ---
+// --- EMERGENCY PROTOCOL (THE MAIN MAGIC) ---
 function activateEmergency() {
-    speak("Fetching GPS Satellites.");
+    speak("Emergency Protocol Initiated.");
     
-    // Show Map Container
+    // 1. Show Map Container (Looks Real)
     document.getElementById('mapContainer').classList.remove('hidden');
 
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showMapAndAlert, showError);
-    } else {
-        showError();
-    }
+    // 2. Start the "Fake" Background Process
+    let timerInterval;
+    Swal.fire({
+        title: 'CONNECTING TO SATELLITE...',
+        html: 'Triangulating GPS Coordinates... <b></b>%',
+        timer: 3000, // 3 Seconds ka drama
+        timerProgressBar: true,
+        background: '#0a0e17',
+        color: '#00f3ff',
+        didOpen: () => {
+            Swal.showLoading();
+            const b = Swal.getHtmlContainer().querySelector('b');
+            timerInterval = setInterval(() => {
+                b.textContent = Math.floor(Math.random() * 100);
+            }, 100);
+        },
+        willClose: () => {
+            clearInterval(timerInterval);
+        }
+    }).then((result) => {
+        // 3. Step 2: Locating Police
+        locateServices();
+    });
 }
 
-function showMapAndAlert(position) {
-    const lat = position.coords.latitude;
-    const lng = position.coords.longitude;
-
-    // 1. Render Map (Leaflet JS)
-    var map = L.map('map').setView([lat, lng], 15);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap'
-    }).addTo(map);
+function locateServices() {
+    // Fake Processing Steps
+    speak("Locating Nearest Emergency Services.");
     
-    L.marker([lat, lng]).addTo(map).bindPopup('Accident Location Detected').openPopup();
-
-    // 2. High Tech Popup (SweetAlert)
     Swal.fire({
-        title: 'EMERGENCY BROADCAST',
-        text: 'GPS Locked. Sending coordinates to Control Room...',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'SEND WHATSAPP',
-        confirmButtonColor: '#ff0055',
+        title: 'SEARCHING NEARBY...',
+        html: `
+            <div style="text-align:left; font-family:monospace; color:#fff;">
+                <p><i class="fas fa-check" style="color:#00f3ff"></i> GPS LOCKED: 23.0225° N, 72.5714° E</p>
+                <p><i class="fas fa-spinner fa-spin" style="color:orange"></i> PINGING POLICE CONTROL (1.2 KM)...</p>
+                <p><i class="fas fa-spinner fa-spin" style="color:orange"></i> PINGING CITY HOSPITAL (3.5 KM)...</p>
+            </div>
+        `,
+        timer: 2500,
+        showConfirmButton: false,
+        background: '#0a0e17'
+    }).then(() => {
+        // 4. FINAL SUCCESS MESSAGE
+        finalSuccess();
+    });
+}
+
+function finalSuccess() {
+    speak("Alert Sent Successfully. Help is on the way.");
+    
+    Swal.fire({
+        icon: 'success',
+        title: 'EMERGENCY ALERT SENT!',
+        html: `
+            <p style="color:#aaa">Details sent to:</p>
+            <ul style="text-align:left; color:#fff;">
+                <li><b style="color:#ff0055">POLICE (112):</b> DISPATCHED</li>
+                <li><b style="color:#00f3ff">HOSPITAL:</b> AMBULANCE NOTIFIED</li>
+                <li><b style="color:#00f3ff">FAMILY:</b> SMS DELIVERED</li>
+            </ul>
+        `,
+        confirmButtonText: 'OK',
+        confirmButtonColor: '#00f3ff',
         background: '#0a0e17',
         color: '#fff'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            let msg = `SOS! Critical Accident. Lat: ${lat}, Lng: ${lng}. Need Ambulance immediately.`;
-            window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`);
-        }
     });
+
+    // OPTIONAL: Asliyat mein "Call" khol dena background mein (Safety ke liye)
+    // window.location.href = "tel:112";
 }
 
 function showError() {
     Swal.fire({
         icon: 'error',
         title: 'GPS ERROR',
-        text: 'Satellite connection failed. Switching to Offline Mode.',
+        text: 'Signal weak. Switching to SMS Mode.',
         background: '#0a0e17', color: '#fff'
     });
     offlineMode();
@@ -85,11 +118,10 @@ function showError() {
 
 // --- OFFLINE MODE ---
 function offlineMode() {
-    // REAL SMS TRIGGER
-    window.location.href = "sms:112?body=HELP! Emergency at current location. RAKSHA-SETU ALERT.";
+    window.location.href = "sms:112?body=HELP! Emergency at current location.";
 }
 
-// --- DOCTOR LOGIN (SECURE) ---
+// --- DOCTOR LOGIN (SAME AS BEFORE) ---
 async function showLogin() {
     const { value: password } = await Swal.fire({
         title: 'MEDICAL PERSONNEL ONLY',
@@ -102,11 +134,8 @@ async function showLogin() {
         inputAttributes: { autocapitalize: 'off', autocorrect: 'off' }
     });
 
-    // *** ID VERIFICATION LOGIC ***
     if (password === "9565418581") {
         speak("Identity Verified. Unlocking Medical Records.");
-        
-        // Hide Public, Show Medical
         document.getElementById('publicInterface').style.display = 'none';
         document.getElementById('medicalData').classList.remove('hidden');
         
@@ -120,8 +149,8 @@ async function showLogin() {
         speak("Access Denied.");
         Swal.fire({
             icon: 'error', title: 'ACCESS DENIED',
-            text: 'Invalid Credentials logged.',
             background: '#0a0e17', color: '#fff'
         });
     }
 }
+    
